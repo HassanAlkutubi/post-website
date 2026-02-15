@@ -1,0 +1,19 @@
+<%- include('partials/header.ejs') %>
+
+<h1>Edit Your Post</h1>
+
+<form class="parent-container" action="/post" method="post">
+  <div class="form-container">
+    <input hidden type="text" id="editId" name="editId" value="<%= existingPost.editId %>" required>
+    
+    <label for="title">Post Title</label>
+    <input class="text-box title-box margin" type="text" id="title" name="title" value="<%= existingPost.title %>" placeholder="Update your title" required>
+    
+    <label for="content">Post Content</label>
+    <textarea class="text-box content-box margin" id="content" name="content" placeholder="Update your content" required><%= existingPost.content %></textarea>
+    
+    <button class="text-box" type="submit">💾 Save Changes</button>
+  </div>
+</form>
+
+<%- include('partials/footer.ejs') %>

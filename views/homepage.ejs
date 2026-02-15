@@ -1,0 +1,43 @@
+<%- include('partials/header.ejs') %>
+
+<h1>Posts.com</h1>
+
+<form class="parent-container" action="/post" method="post">
+  <div class="form-container">
+    <h2 style="margin-top: 0; color: #F5F5F5; font-size: 1.5rem;">Create New Post</h2>
+    <label for="title">Post Title</label>
+    <input class="text-box title-box margin" type="text" id="title" name="title" placeholder="What's on your mind?" required>
+    <label for="content">Post Content</label>
+    <textarea class="text-box content-box margin" id="content" name="content" placeholder="Share your thoughts..." required></textarea>
+    <button class="text-box" type="submit">Publish Post</button>
+  </div>
+</form>
+
+<h1>Recent Posts</h1>
+<% if (locals.allPosts && allPosts.length > 0) { %>
+  <ul class="parent-container">
+    <% allPosts.forEach((post) => { %>
+      <li class="posts-div" id="post<%= post.postId %>">
+        <h2 hidden><%= post.postId %></h2>
+        <h2><%= post.title %></h2>
+        <p><%= post.content %></p>
+        <div class="post-actions">
+          <form action="/edit" method="post" style="flex: 1; min-width: 100px;">
+            <input hidden type="text" id="editId" name="editId" value="<%= post.postId %>" required>
+            <input hidden type="text" id="title" name="title" value="<%= post.title %>" required>
+            <input hidden type="text" id="content" name="content" value="<%= post.content %>" required>
+            <button class="text-box" type="submit">✏️ Edit</button>
+          </form>
+          <form action="/post" method="post" style="flex: 1; min-width: 100px;">
+            <input hidden type="text" id="deletedId" name="deletedId" value="<%= post.postId %>" required>
+            <button class="text-box" type="submit">🗑️ Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <h3><em>No posts yet. Create one to get started!</em></h3>
+<% } %>
+
+<%- include('partials/footer.ejs') %>
